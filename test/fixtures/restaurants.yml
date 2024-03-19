@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  will_split_votes: 1
+  wont_split_votes: 1
+
+two:
+  name: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  will_split_votes: 1
+  wont_split_votes: 1

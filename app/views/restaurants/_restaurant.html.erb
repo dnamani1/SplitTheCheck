@@ -1,0 +1,42 @@
+<div id="<%= dom_id restaurant %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= restaurant.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Address:</strong>
+    <%= restaurant.address %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">City:</strong>
+    <%= restaurant.city %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">State:</strong>
+    <%= restaurant.state %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Zip:</strong>
+    <%= restaurant.zip %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Will split votes:</strong>
+    <%= restaurant.will_split_votes %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Wont split votes:</strong>
+    <%= restaurant.wont_split_votes %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this restaurant", restaurant, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this restaurant", edit_restaurant_path(restaurant), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
