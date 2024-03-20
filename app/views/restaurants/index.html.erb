@@ -1,14 +1,63 @@
-<div class="w-full">
+<div class="container mx-auto my-8">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <p class="notice"><%= notice %></p>
   <% end %>
+ 
+  <h1 class="text-center font-bold text-3xl mb-6">Split The Checki</h1>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Restaurants</h1>
-    <%= link_to "New restaurant", new_restaurant_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="container mx-auto my-8">
+  <section class="project-description mb-6">
+    <h2 class="text-center font-bold text-2xl mb-4">Introduction</h2>
+    <p>The project "Split My Check" is a social-networking website centered around the dining experience at restaurants, specifically focusing on the ability of establishments to accommodate groups by splitting the check. The purpose of this platform is to empower customers with the information they need to make informed decisions about where to dine based on the check-splitting policy of the restaurant.</p>
+
+    <h3 class="font-bold text-xl mt-4 mb-2">Key Features:</h3>
+    <ul>
+      <li><strong>Voting System:</strong> Users can vote on whether a restaurant allows the splitting of the check. Each restaurant will have a tally of "will split" and "won't split" votes, reflecting user experiences.</li><br>
+      <li><strong>Search Functionality:</strong> Users can search the database for restaurants to discover their check-splitting policy. Restaurants can be searched by both name and location.</li><br>
+      <li><strong>Restaurant Listings:</strong> Users have the ability to create new listings for restaurants that are not currently found in the database.</li><br>
+    </ul>
+  </section>
+
+  <div class="search-container my-4">
+    <h2 class="text-center font-bold text-3xl">Search Restaurant</h2>
+    <%= form_with(url: restaurants_path, method: "get", local: true) do %>
+      <div class="search-fields">
+        <%= radio_button_tag :search_by, "name", true %>
+        <%= label_tag :search_by_name, "Name" %>
+        <%= radio_button_tag :search_by, "zip" %>
+        <%= label_tag :search_by_zip, "Zip" %><br>
+      </div>
+      <%= search_field_tag :search, nil, placeholder: "Search", class: "search-input" %>
+      <%= submit_tag "Search", name: nil, class: "search-submit" %>
+    <% end %>
+    <%= link_to "Add Restaurant to help others find.", new_restaurant_path, class: "add-restaurant" %>
   </div>
 
-  <div id="restaurants" class="min-w-full">
-    <%= render @restaurants %>
+  <div class="restaurants-list">
+    <table class="min-w-full">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Zip</th>
+          <th>Will Split Vote</th>
+          <th>Won't Split Vote</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @restaurants.each do |restaurant| %>
+          <tir>
+            <td><%= restaurant.name %></td>
+            <td><%= restaurant.address %></td>
+            <td><%= restaurant.zip %></td>
+            <td><%= restaurant.will_split_votes %></td>
+            <td><%= restaurant.wont_split_votes %></td>
+            <td><%= link_to 'Show', restaurant, class: 'btn' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
+
