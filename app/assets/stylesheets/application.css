@@ -13,3 +13,85 @@
  *= require_tree .
  *= require_self
  */
+
+<style>
+  .project-description p,
+  .project-description ul {
+    color: #555;
+    line-height: 1.6;
+  }
+  .project-description ul {
+    padding-left: 20px;
+  }
+  .project-description li {
+    margin-bottom: 10px;
+  }
+  /*
+  .notice {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-left: 5px solid #2c3e50;
+    margin-bottom: 20px;
+  }*/
+
+  .header-background {
+    background-color: #3498db;
+    color: white;
+  }
+
+  .search-container {
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+  }
+  .search-fields {
+    margin-bottom: 20px;
+  }
+  .search-input,
+  .search-submit {
+    padding: 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  .search-submit {
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    border: none;
+  }
+  .add-restaurant {
+    display: block;
+    background-color: #e74c3c;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .add-restaurant:hover {
+    background-color: #c0392b;
+  }
+  .restaurants-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .restaurants-list th,
+  .restaurants-list td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  .btn {
+    padding: 10px 15px;
+    background-color: #2ecc71;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  .btn:hover {
+    background-color: #27ae60;
+  }
+</style>

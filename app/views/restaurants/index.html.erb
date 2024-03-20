@@ -1,11 +1,12 @@
-<div class="container mx-auto my-8">
+ <div class="container">
   <% if notice.present? %>
     <p class="notice"><%= notice %></p>
   <% end %>
- 
-  <h1 class="text-center font-bold text-3xl mb-6">Split The Checki</h1>
 
-  <div class="container mx-auto my-8">
+  <header class="header-background">
+    <h1 class="text-center font-bold text-4xl mb-6">Split The Check</h1>
+  </header>
+
   <section class="project-description mb-6">
     <h2 class="text-center font-bold text-2xl mb-4">Introduction</h2>
     <p>The project "Split My Check" is a social-networking website centered around the dining experience at restaurants, specifically focusing on the ability of establishments to accommodate groups by splitting the check. The purpose of this platform is to empower customers with the information they need to make informed decisions about where to dine based on the check-splitting policy of the restaurant.</p>
@@ -14,23 +15,24 @@
     <ul>
       <li><strong>Voting System:</strong> Users can vote on whether a restaurant allows the splitting of the check. Each restaurant will have a tally of "will split" and "won't split" votes, reflecting user experiences.</li><br>
       <li><strong>Search Functionality:</strong> Users can search the database for restaurants to discover their check-splitting policy. Restaurants can be searched by both name and location.</li><br>
-      <li><strong>Restaurant Listings:</strong> Users have the ability to create new listings for restaurants that are not currently found in the database.</li><br>
+      <li><strong>Restaurant Listings:</strong> Users have the ability to create new listings for restaurants that are not currently found in the database.</li>
     </ul>
   </section>
 
-  <div class="search-container my-4">
-    <h2 class="text-center font-bold text-3xl">Search Restaurant</h2>
+  <div class="search-container my-4 text-center">
+    <h2 class="text-center font-bold text-2xl mb-8">Search Restaurant</h2>
     <%= form_with(url: restaurants_path, method: "get", local: true) do %>
       <div class="search-fields">
         <%= radio_button_tag :search_by, "name", true %>
         <%= label_tag :search_by_name, "Name" %>
         <%= radio_button_tag :search_by, "zip" %>
-        <%= label_tag :search_by_zip, "Zip" %><br>
+        <%= label_tag :search_by_zip, "Zip" %>
       </div>
-      <%= search_field_tag :search, nil, placeholder: "Search", class: "search-input" %>
-      <%= submit_tag "Search", name: nil, class: "search-submit" %>
+      <%= search_field_tag :search, nil, placeholder: "Search", class: "search-input mb-4" %>
+      <%= submit_tag "Search", name: nil, class: "search-submit mb-4" %>
     <% end %>
-    <%= link_to "Add Restaurant to help others find.", new_restaurant_path, class: "add-restaurant" %>
+      <%= label_tag :add_restaurant, "Add Restaurant to help others to find", class: "add-restaurant-text font-bold"%>
+      <%= link_to "Add Restaurant", new_restaurant_path, class: "add-restaurant font-bold" %>
   </div>
 
   <div class="restaurants-list">
@@ -47,7 +49,7 @@
       </thead>
       <tbody>
         <% @restaurants.each do |restaurant| %>
-          <tir>
+          <tr>
             <td><%= restaurant.name %></td>
             <td><%= restaurant.address %></td>
             <td><%= restaurant.zip %></td>
@@ -60,4 +62,3 @@
     </table>
   </div>
 </div>
-
