@@ -1,15 +1,20 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
+<div class="mx-auto md:w-2/3 w-full p-6 bg-gray-200 rounded-lg shadow-md">
+  
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-500 text-white font-medium rounded-lg mb-5 text-center" id="notice"><%= notice %></p>
+  <% end %>
 
-    <%= render @restaurant %>
+<!-- <div class="mx-auto md:w-2/3 w-full p-6 bg-gray-200 rounded-lg shadow-md"> -->
+  <section class="project-description">
+    <h2 class="text-center font-bold text-3xl mb-4">Show Restaurant Details</h2>
+  </section>
 
-    <%= link_to "Edit this restaurant", edit_restaurant_path(@restaurant), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this restaurant", restaurant_path(@restaurant), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to "Back to restaurants", restaurants_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <%= render @restaurant %>
+
+  <div class="text-center mt-4">
+    <%= link_to "Edit this restaurant", edit_restaurant_path(@restaurant), class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium hover:bg-blue-700" %>
+    
+    <%= link_to "Back to restaurants", restaurants_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium hover:bg-blue-700 ml-2" %>
   </div>
 </div>
+
