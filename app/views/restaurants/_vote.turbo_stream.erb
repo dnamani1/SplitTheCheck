@@ -1,0 +1,9 @@
+<%= turbo_stream.update dom_id(@restaurant, :will_split_votes) do %>
+  <%=  <strong class="block font-medium mb-1 text-grey-700">Will split votes:</strong>
+  <%= @restaurant.will_split_votes %>
+ <% end %>
+
+ <%= turbo_stream.update dom_id(@restaurant, :wont_split_votes) do %>
+   <%= <strong class="block font-medium mb-1 text-grey-700">Won't split votes:</strong>
+  <%= @restaurant.wont_split_votes %>
+<% end %>

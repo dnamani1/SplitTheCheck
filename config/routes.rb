@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :restaurants
+  resources :restaurants, except: [:destroy] do
+    member do
+      patch :vote
+    end
+  end
+  
+  root to: 'restaurants#index'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

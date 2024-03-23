@@ -19,6 +19,22 @@ class RestaurantsController < ApplicationController
   def edit
   end
 
+  def vote
+    @restaurant = Restaurant.find(params[:id])
+    vote_type = params[:restaurant][:vote]
+
+    if vote_type == 'will_split'
+      @restaurant.increment!(:will_split_votes)
+    elsif vote_type == 'wont_split'
+      @restaurant.increment!(:wont_split_votes)
+    end
+
+  respond_to do |format|
+    # format.turbo_stream 
+      format.html { redirect_to @restaurant, notice: "Vote was successfully recorded." }
+    end
+  end
+
   # POST /restaurants or /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)

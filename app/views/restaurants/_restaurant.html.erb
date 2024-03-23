@@ -1,4 +1,4 @@
-<div id="<%= dom_id restaurant %>">
+<div id="<%= dom_id(@restaurant) %>">
   <p class="my-5">
     <strong class="block font-medium mb-1 text-gray-700">Name:</strong>
     <span class="block p-3 bg-white rounded-md shadow-sm"><%= restaurant.name %></span>
@@ -24,14 +24,14 @@
    <span class="block p-3 bg-white rounded-md shadow-sm"> <%= restaurant.zip %></span>
   </p>
 
-  <p class="my-5">
+  <p id="<%= dom_id(@restaurant, :will_split_votes) %>" class="my-5">
     <strong class="block font-medium mb-1 text-grey-700">Will split votes:</strong>
-    <%= restaurant.will_split_votes %>
+    <%= @restaurant.will_split_votes %>
   </p>
 
-  <p class="my-5">
+  <p id="<%= dom_id(@restaurant, :wont_split_votes) %>" class="my-5">
     <strong class="block font-medium mb-1 text-gey-700">Wont split votes:</strong>
-    <%= restaurant.wont_split_votes %>
+    <%= @restaurant.wont_split_votes %>
   </p>
 
   <% if action_name != "show" %>
