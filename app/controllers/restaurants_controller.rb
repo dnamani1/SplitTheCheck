@@ -21,7 +21,13 @@ class RestaurantsController < ApplicationController
 
   def vote
     @restaurant = Restaurant.find(params[:id])
-    vote_type = params[:restaurant][:vote]
+    #vote_type = params[:restaurant][:vote]
+    vote_type = params[:restaurant].present? ? params[:restaurant][:vote] : nil
+
+    if vote_type.blank?
+      redirect_to @restaurant, notice: "Please select one option to vote."
+      return
+    end
 
     if vote_type == 'will_split'
       @restaurant.increment!(:will_split_votes)
@@ -30,7 +36,7 @@ class RestaurantsController < ApplicationController
     end
 
   respond_to do |format|
-    # format.turbo_stream 
+      #format.turbo_stream 
       format.html { redirect_to @restaurant, notice: "Vote was successfully recorded." }
     end
   end
@@ -44,6 +50,7 @@ class RestaurantsController < ApplicationController
         format.html { redirect_to restaurant_url(@restaurant), notice: "Restaurant was successfully created." }
         format.json { render :show, status: :created, location: @restaurant }
       else
+        #puts @restaurant.errors.full_messages
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @restaurant.errors, status: :unprocessable_entity }
       end
@@ -68,6 +75,7 @@ class RestaurantsController < ApplicationController
     @restaurant.destroy
 
     respond_to do |format|
+      puts @restaurant.errors.full_messages
       format.html { redirect_to restaurants_url, notice: "Restaurant was successfully destroyed." }
       format.json { head :no_content }
     end

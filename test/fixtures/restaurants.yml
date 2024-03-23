@@ -4,8 +4,8 @@ one:
   name: MyString
   address: MyString
   city: MyString
-  state: MyString
-  zip: 1
+  state: TX
+  zip: 13455
   will_split_votes: 1
   wont_split_votes: 1
 
@@ -13,7 +13,16 @@ two:
   name: MyString
   address: MyString
   city: MyString
-  state: MyString
-  zip: 1
+  state: GA
+  zip: 12345
   will_split_votes: 1
   wont_split_votes: 1
+
+three:
+ name: Chickfila
+ address: 123 Duberry St
+ city: Atlanta
+ state: GA
+ zip: 30212
+ will_split_votes: 1
+ wont_split_votes: 0

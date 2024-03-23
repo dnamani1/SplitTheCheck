@@ -11,7 +11,7 @@
   <%= render @restaurant %>
 
   <!--  <div class="flex items-center justify-center space-x-4 mt-4"> -->
-    <%= form_with model: @restaurant, url: vote_restaurant_path(@restaurant), method: :patch, data: { turbo: false }, class: "flex items-center space-x-2" do |form| %>
+    <%= form_with model: @restaurant, url: vote_restaurant_path(@restaurant), method: :patch, class: "flex items-center space-x-2" do |form| %>
       <%= form.radio_button :vote, 'will_split', class: "form-radio" %>
       <%= form.label :vote_will_split, 'Will Split Check', class: "text-sm" %>
       <%= form.radio_button :vote, 'wont_split', class: "form-radio" %>
