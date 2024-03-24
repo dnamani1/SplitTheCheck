@@ -5,6 +5,34 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     @restaurant = restaurants(:one)
   end
 
+  test "should get index with all restaurants" do
+    get restaurants_url
+    assert_response :success
+    assert_select 'td', text: 'Pizza Place'
+    assert_select 'td', text: 'Burger Joint'
+  end
+
+  test "should get index with search by name" do
+    get restaurants_url, params: { search: "Pizza", search_by: "name" }
+    assert_response :success
+    assert_select 'td', text: 'Pizza Place'
+    assert_select 'td', text: 'Burger Joint', count: 0
+  end
+
+  test "should get index with search by zip" do
+    get restaurants_url, params: { search: "67890", search_by: "zip" }
+    assert_response :success
+    assert_select 'td', text: 'Burger Joint'
+    assert_select 'td', text: 'Pizza Place', count: 0
+  end
+
+  test "should redirect with notice when no records found" do
+    get restaurants_url, params: { search: "Nonexistent", search_by: "name" }
+    assert_redirected_to new_restaurant_path
+    follow_redirect!
+    assert_select 'p#notice', text: "No records found. Please add the restaurant so that others can find it."
+  end
+
   test "should not create restaurant with invalid attributes" do
     assert_no_difference("Restaurant.count") do
       post restaurants_url, params: { restaurant: { name: '', address: '', city: '', state: '', zip: 'abcde' } }

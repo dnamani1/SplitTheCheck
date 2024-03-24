@@ -3,7 +3,20 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    if params[:search].present? && params[:search_by].present?
+      search_term = params[:search].downcase
+      if params[:search_by] == 'name'
+        @restaurants = Restaurant.where('LOWER(name) LIKE ?', "%#{search_term}%")
+      elsif params[:search_by] == 'zip'
+        @restaurants = Restaurant.where('zip LIKE ?', "%#{search_term}%")
+      end
+      if @restaurants.empty?
+      redirect_to new_restaurant_path, notice: "No records found. Please add the restaurant so that others can find it."
+      return
+    end
+    else
+      @restaurants = Restaurant.all
+    end
   end
 
   # GET /restaurants/1 or /restaurants/1.json
