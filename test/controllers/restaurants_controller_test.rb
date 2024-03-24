@@ -2,9 +2,33 @@ require "test_helper"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @restaurant = restaurants(:one)
+   @restaurant = Restaurant.create!(
+      name: "Test Restaurant",
+      address: "123 Test St",
+      city: "Testville",
+      state: "TS",
+      zip: "12345",
+      will_split_votes: 0,
+      wont_split_votes: 0
+    ) 
   end
 
+  test "should route to restaurants index" do
+    assert_routing '/restaurants', controller: "restaurants", action: "index"
+  end
+
+  test "should route to new restaurant" do
+    assert_routing '/restaurants/new', controller: "restaurants", action: "new"
+  end
+
+  test "should route to create restaurant" do
+    assert_routing({ method: 'post', path: '/restaurants' }, { controller: "restaurants", action: "create" })
+  end
+
+  test "should route to edit restaurant" do
+    assert_routing '/restaurants/1/edit', controller: "restaurants", action: "edit", id: "1"
+end
+  
   test "should get index with all restaurants" do
     get restaurants_url
     assert_response :success

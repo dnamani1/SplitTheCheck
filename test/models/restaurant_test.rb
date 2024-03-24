@@ -1,7 +1,6 @@
 require "test_helper"
 
 class RestaurantTest < ActiveSupport::TestCase
-  fixtures :restaurants
 
   setup do
     @restaurant = Restaurant.new(name: "Example Restaurant", address: "123 Main St", city: "Townsville", state: "NY", zip: "12345")

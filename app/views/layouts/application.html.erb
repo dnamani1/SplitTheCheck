@@ -12,8 +12,21 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <header class="fixed top-0 left-0 right-0 bg-blue-600 text-white shadow">
+    <nav class="container mx-auto flex justify-between items-center px-5 py-3">
+      <%= link_to 'SplitTheCheck', root_path, class: "text-lg font-bold" %>
+      <div>
+        <%= link_to 'Home', root_path, class: "text-white px-3 py-2 rounded-md" %>
+        <%= link_to 'Add Restaurant', new_restaurant_path, class: "text-white px-3 py-2 rounded-md" %>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto mt-20 px-5 py-4 bg-white shadow-md rounded-lg min-h-screen">
+    <%= yield %>
+  </main>
+  <footer class="bg-gray-200 text-center py-4 mt-6">
+    &copy; <%= Time.now.year %> SplitTheCheck. All rights reserved.
+  </footer>
   </body>
 </html>
