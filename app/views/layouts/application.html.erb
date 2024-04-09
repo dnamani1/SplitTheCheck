@@ -6,7 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -18,6 +17,13 @@
       <div>
         <%= link_to 'Home', root_path, class: "text-white px-3 py-2 rounded-md" %>
         <%= link_to 'Add Restaurant', new_restaurant_path, class: "text-white px-3 py-2 rounded-md" %>
+      <% if user_signed_in? %>
+          <span class="text-white px-3 py-2">Welcome, <%= current_user.email %></span>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "text-white px-3 py-2 rounded-md" %>
+        <% else %>
+          <%= link_to 'Sign in', new_user_session_path, class: "text-white px-3 py-2 rounded-md" %>
+          <%= link_to 'Sign up', new_user_registration_path, class: "text-white px-3 py-2 rounded-md" %>
+        <% end %>
       </div>
     </nav>
   </header>
