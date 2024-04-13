@@ -19,7 +19,7 @@
         <%= link_to 'Add Restaurant', new_restaurant_path, class: "text-white px-3 py-2 rounded-md" %>
       <% if user_signed_in? %>
           <span class="text-white px-3 py-2">Welcome, <%= current_user.email %></span>
-          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "text-white px-3 py-2 rounded-md" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
         <% else %>
           <%= link_to 'Sign in', new_user_session_path, class: "text-white px-3 py-2 rounded-md" %>
           <%= link_to 'Sign up', new_user_registration_path, class: "text-white px-3 py-2 rounded-md" %>
