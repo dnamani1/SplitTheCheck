@@ -3,6 +3,8 @@ class Restaurant < ApplicationRecord
   validates :zip, format: { with: /\A\d{5}\z/, message: "must be a 5-digit number" }
   validates :city, format: { with: /\A[a-zA-Z]+\z/, message: "must only contain letters" }
   validates :name, format: { with: /\A[a-zA-Z]/, message: "must start with a letter" }
+  
+  has_many :votes
 
   STATES = [
     ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'],
@@ -24,4 +26,15 @@ class Restaurant < ApplicationRecord
     ['Wisconsin', 'WI'], ['Wyoming', 'WY']
   ].freeze
 
+  def will_split_vote_count
+    votes.where(split: true).count
+  end
+
+  def wont_split_vote_count
+    votes.where(split: false).count
+  end
+
+  def voted_by?(user)
+    votes.exists?(user: user)
+  end
 end

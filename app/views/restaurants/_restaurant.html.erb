@@ -26,12 +26,12 @@
 
   <p id="<%= dom_id(@restaurant, :will_split_votes) %>" class="my-5">
     <strong class="block font-medium mb-1 text-grey-700">Will split votes:</strong>
-    <%= @restaurant.will_split_votes %>
+    <%= @restaurant.will_split_vote_count %>
   </p>
 
   <p id="<%= dom_id(@restaurant, :wont_split_votes) %>" class="my-5">
     <strong class="block font-medium mb-1 text-gey-700">Wont split votes:</strong>
-    <%= @restaurant.wont_split_votes %>
+    <%= @restaurant.wont_split_vote_count %>
   </p>
 
   <% if action_name != "show" %>

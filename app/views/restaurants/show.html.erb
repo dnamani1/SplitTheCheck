@@ -10,14 +10,18 @@
 
   <%= render @restaurant %>
 
-  <!--  <div class="flex items-center justify-center space-x-4 mt-4"> -->
-    <%= form_with model: @restaurant, url: vote_restaurant_path(@restaurant), method: :patch, class: "flex items-center space-x-2" do |form| %>
-      <%= form.radio_button :vote, 'will_split', class: "form-radio" %>
-      <%= form.label :vote_will_split, 'Will Split Check', class: "text-sm" %>
-      <%= form.radio_button :vote, 'wont_split', class: "form-radio" %>
-      <%= form.label :vote_wont_split, "Won't Split Check", class: "text-sm" %>
-      <%= form.submit "Vote", class: "rounded-lg py-2 px-4 bg-blue-600 text-white font-medium hover:bg-blue-700" %>
+  <div class="flex items-center justify-center space-x-4 mt-4">
+    <% if user_signed_in? %>
+      <% if !@restaurant.voted_by?(current_user) %>
+        <%= button_to 'Vote Will Split', votes_path(vote: { restaurant_id: @restaurant.id, split: true }), method: :post, remote: true, form_class: "inline  bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" %>
+        <%= button_to "Vote Won't Split", votes_path(vote: { restaurant_id: @restaurant.id, split: false }), method: :post, remote: true, form_class: "inline  bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" %>
+      <% else %>
+        <p class = "text-center, text-green-500">You have already voted for this restaurant.</p>
+      <% end %>
+    <% else %>
+      <%= link_to 'Log in to Vote', new_user_session_path, class: "text-blue-600 hover:text-blue-700 underline" %>
     <% end %>
+  </div>
 
     <div class="flex items-center justify-center space-x-4 mt-4">
     <%= link_to "Edit this restaurant", edit_restaurant_path(@restaurant), class: "rounded-lg py-2 px-4 bg-blue-600 text-white font-medium hover:bg-blue-700" %>

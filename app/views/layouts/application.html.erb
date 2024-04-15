@@ -17,13 +17,13 @@
       <div>
         <%= link_to 'Home', root_path, class: "text-white px-3 py-2 rounded-md" %>
         <%= link_to 'Add Restaurant', new_restaurant_path, class: "text-white px-3 py-2 rounded-md" %>
-      <% if user_signed_in? %>
-          <span class="text-white px-3 py-2">Welcome, <%= current_user.email %></span>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false } %>
-        <% else %>
-          <%= link_to 'Sign in', new_user_session_path, class: "text-white px-3 py-2 rounded-md" %>
-          <%= link_to 'Sign up', new_user_registration_path, class: "text-white px-3 py-2 rounded-md" %>
-        <% end %>
+        <% if user_signed_in? %>
+          <span class="text-white px-3 py-2 inline-block">Welcome, <%= current_user.email %></span>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "text-white inline-block" %>
+      <% else %>
+        <%= link_to 'Sign in', new_user_session_path, class: "text-white px-3 py-2 rounded-md" %>
+        <%= link_to 'Sign up', new_user_registration_path, class: "text-white px-3 py-2 rounded-md" %>
+      <% end %>
       </div>
     </nav>
   </header>

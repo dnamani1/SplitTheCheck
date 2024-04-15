@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
+  resources :votes
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',
     sign_up: 'signup'
   }
+
+  resources :votes, only: [:index, :show,  :create, :destroy]
+
   resources :restaurants, except: [:destroy] do
     member do
       patch :vote
