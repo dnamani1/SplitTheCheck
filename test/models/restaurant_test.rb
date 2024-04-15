@@ -14,6 +14,10 @@ class RestaurantTest < ActiveSupport::TestCase
     assert restaurant.errors[:city].any?
     assert restaurant.errors[:state].any?
     assert restaurant.errors[:zip].any?
+
+    @user1 = users(:one)
+    @user2 = users(:two)
+    @user3 = users(:three)
   end
 
   test "zip code should be in the correct format" do

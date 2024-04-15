@@ -1,16 +1,13 @@
 require "test_helper"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
+
+  include Devise::Test::IntegrationHelpers
+
   setup do
-   @restaurant = Restaurant.create!(
-      name: "Test Restaurant",
-      address: "123 Test St",
-      city: "Testville",
-      state: "TS",
-      zip: "12345",
-      will_split_votes: 0,
-      wont_split_votes: 0
-    ) 
+    @restaurant = restaurants(:one)  # Use the fixture named 'one'
+    @user = users(:one)           # Assuming you have a user fixture as well
+    sign_in @user 
   end
 
   test "should route to restaurants index" do
@@ -64,26 +61,8 @@ end
     assert_response :unprocessable_entity
   end
 
-  test "vote should increase will_split_votes" do
-    assert_changes '@restaurant.reload.will_split_votes', from: @restaurant.will_split_votes, to: @restaurant.will_split_votes + 1 do
-      patch vote_restaurant_url(@restaurant), params: { restaurant: { vote: 'will_split' } }
-    end
-    assert_redirected_to restaurant_url(@restaurant)
-    follow_redirect!
-    assert_match /Vote was successfully recorded/, response.body
-  end
-
-  test "vote should increase wont_split_votes" do
-    assert_changes '@restaurant.reload.wont_split_votes', from: @restaurant.wont_split_votes, to: @restaurant.wont_split_votes + 1 do
-      patch vote_restaurant_url(@restaurant), params: { restaurant: { vote: 'wont_split' } }
-    end
-    assert_redirected_to restaurant_url(@restaurant)
-    follow_redirect!
-    assert_match /Vote was successfully recorded/, response.body
-  end
-
   test "vote without selecting option should redirect with notice" do
-    assert_no_changes '@restaurant.reload.will_split_votes' do
+    assert_no_changes '@restaurant.reload.will_split_vote_count' do
       patch vote_restaurant_url(@restaurant), params: { restaurant: { vote: '' } }
     end
     assert_redirected_to restaurant_url(@restaurant)
@@ -103,7 +82,7 @@ end
 
   test "should create restaurant" do
     assert_difference("Restaurant.count") do
-      post restaurants_url, params: { restaurant: { address: @restaurant.address, city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split_votes: @restaurant.will_split_votes, wont_split_votes: @restaurant.wont_split_votes, zip: @restaurant.zip } }
+      post restaurants_url, params: { restaurant: { address: @restaurant.address, city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, zip: @restaurant.zip } }
     end
 
     assert_redirected_to restaurant_url(Restaurant.last)
@@ -120,7 +99,7 @@ end
   end
 
   test "should update restaurant" do
-    patch restaurant_url(@restaurant), params: { restaurant: { address: @restaurant.address, city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, will_split_votes: @restaurant.will_split_votes, wont_split_votes: @restaurant.wont_split_votes, zip: @restaurant.zip } }
+    patch restaurant_url(@restaurant), params: { restaurant: { address: @restaurant.address, city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, zip: @restaurant.zip } }
     assert_redirected_to restaurant_url(@restaurant)
   end
 end

@@ -21,6 +21,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1 or /restaurants/1.json
   def show
+    store_location_for(:user, request.fullpath) unless user_signed_in?
   end
 
   # GET /restaurants/new
@@ -43,9 +44,9 @@ class RestaurantsController < ApplicationController
     end
 
     if vote_type == 'will_split'
-      @restaurant.increment!(:will_split_votes)
+      @restaurant.increment!(:will_split_vote_count)
     elsif vote_type == 'wont_split'
-      @restaurant.increment!(:wont_split_votes)
+      @restaurant.increment!(:wont_split_vote_count)
     end
 
   respond_to do |format|
@@ -102,6 +103,6 @@ class RestaurantsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def restaurant_params
-      params.require(:restaurant).permit(:name, :address, :city, :state, :zip, :will_split_votes, :wont_split_votes)
+      params.require(:restaurant).permit(:name, :address, :city, :state, :zip, :will_split_vote_count, :wont_split_vote_count)
     end
 end

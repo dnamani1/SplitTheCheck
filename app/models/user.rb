@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :password_confirmation, presence: true
+  has_many :votes
 end

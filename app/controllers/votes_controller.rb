@@ -10,13 +10,15 @@ class VotesController < ApplicationController
   # GET /votes/1 or /votes/1.json
   def show
   end
+ 
+  def new
+    @vote = Vote.new
+  end
   
   # POST /votes or /votes.json
   def create
-     # Ensure that we're finding the restaurant by ID passed in the parameters
     restaurant = Restaurant.find(vote_params[:restaurant_id])
 
-    # Check if the current user has already voted for this restaurant
     existing_vote = restaurant.votes.find_by(user: current_user)
 
     respond_to do |format|
@@ -24,8 +26,7 @@ class VotesController < ApplicationController
         format.html { redirect_to restaurant, alert: "You have already voted for this restaurant." }
         format.json { render json: { error: "You have already voted for this restaurant." }, status: :forbidden }
       else
-        # We don't need to pass user_id in the parameters since we're already
-        # getting the current_user from the devise helper
+
         @vote = restaurant.votes.build(vote_params.merge(user: current_user))
 
         if @vote.save
@@ -47,6 +48,6 @@ class VotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def vote_params
-      params.require(:vote).permit(:user_id, :restaurant_id, :split)
+      params.require(:vote).permit(:restaurant_id, :split)
     end
 end

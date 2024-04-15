@@ -6,17 +6,13 @@ one:
   city: MyString
   state: TX
   zip: 13455
-  will_split_votes: 1
-  wont_split_votes: 1
-
+  
 two:
   name: MyString
   address: MyString
   city: MyString
   state: GA
   zip: 12345
-  will_split_votes: 1
-  wont_split_votes: 1
 
 three:
   name: Chickfila
@@ -24,17 +20,13 @@ three:
   city: Atlanta
   state: GA
   zip: 30212
-  will_split_votes: 1
-  wont_split_votes: 0
-
+ 
 four:
   name: Burger Joint
   address: 456 Side St
   city: Othertown
   state: GA
   zip: 67890
-  will_split_votes: 0
-  wont_split_votes: 0
 
 five:
   name: Pizza Place
@@ -42,5 +34,4 @@ five:
   city: Anytown
   state: GA
   zip: 12345
-  will_split_votes: 0
-  wont_split_votes: 0
+
