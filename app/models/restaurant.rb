@@ -5,6 +5,7 @@ class Restaurant < ApplicationRecord
   validates :name, format: { with: /\A[a-zA-Z]/, message: "must start with a letter" }
   
   has_many :votes
+  has_many :comments, dependent: :destroy
 
   STATES = [
     ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'],

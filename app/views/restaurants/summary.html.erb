@@ -1,0 +1,18 @@
+<h1>Summary</h1>
+
+<section>
+  <h2>Comments History</h2>
+  <% @comments.each do |comment| %>
+    <p><%= comment.user.email %>: <%= comment.content %> - <%= comment.created_at.strftime("%m-%d-%Y") %></p>
+  <% end %>
+</section>
+
+<section>
+  <h2>Voting History</h2>
+  <% @votes.each do |restaurant, votes| %>
+    <h3><%= restaurant.name %></h3>
+    <% votes.each do |vote| %>
+      <p><%= vote.user.email %>: <%= vote.split ? 'Will Split' : "Won't Split" %></p>
+    <% end %>
+  <% end %>
+</section>

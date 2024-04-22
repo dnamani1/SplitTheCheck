@@ -22,6 +22,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1 or /restaurants/1.json
   def show
     store_location_for(:user, request.fullpath) unless user_signed_in?
+    @comments = @restaurant.comments.order(created_at: :desc)
   end
 
   # GET /restaurants/new
@@ -53,6 +54,11 @@ class RestaurantsController < ApplicationController
       #format.turbo_stream 
       format.html { redirect_to @restaurant, notice: "Vote was successfully recorded." }
     end
+  end
+
+  def summary
+    @comments = Comment.all.order(created_at: :desc)
+    @votes = Vote.all.group_by { |vote| vote.restaurant }
   end
 
   # POST /restaurants or /restaurants.json
