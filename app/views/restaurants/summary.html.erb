@@ -1,18 +1,49 @@
-<h1>Summary</h1>
+<h1 class="text-center font-bold text-3xl mb-4">Summary</h1>
 
-<section>
-  <h2>Comments History</h2>
-  <% @comments.each do |comment| %>
-    <p><%= comment.user.email %>: <%= comment.content %> - <%= comment.created_at.strftime("%m-%d-%Y") %></p>
-  <% end %>
-</section>
+<div class="bg-gray-200 p-6 rounded-lg shadow-md">
+  <section class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Comments made:</h2>
+       <table class="table-auto">
+       <thead>
+        <tr>
+          <th class="px-4 py-2 border">Restaurant</th>
+          <th class="px-4 py-2 border">Comments</th>
+          <th class="px-4 py-2 border">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @comments.each do |comment| %>
+          <tr>
+            <td class="px-4 py-2 border"><%= comment.restaurant.name %></td>
+            <td class="px-4 py-2 border"><%= comment.content %></td>
+            <td class="px-4 py-2 border"><%= comment.created_at.strftime("%m-%d-%Y") %></td>
+          </tr>
+        <% end %>
+       </tbody>
+       </table>
+  </section>
 
-<section>
-  <h2>Voting History</h2>
-  <% @votes.each do |restaurant, votes| %>
-    <h3><%= restaurant.name %></h3>
-    <% votes.each do |vote| %>
-      <p><%= vote.user.email %>: <%= vote.split ? 'Will Split' : "Won't Split" %></p>
-    <% end %>
-  <% end %>
-</section>
+  <%# If you have data for favorite restaurants, implement similar section here %>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-4">Vote History:</h2>
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Restaurant</th>
+          <th class="px-4 py-2 border">Will the Restaurant split</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @votes.each do |restaurant, votes| %>
+          <tr>
+            <td class="px-4 py-2 border"><%= restaurant.name %></td>
+            <%# Assuming there is only one vote per user per restaurant %>
+            <td class="px-4 py-2 border"><%= votes.first.split ? 'Yes' : 'No' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+</div>
+
