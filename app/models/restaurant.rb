@@ -6,6 +6,7 @@ class Restaurant < ApplicationRecord
   
   has_many :votes
   has_many :comments, dependent: :destroy
+  has_many :favorites
 
   STATES = [
     ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'],
@@ -37,5 +38,9 @@ class Restaurant < ApplicationRecord
 
   def voted_by?(user)
     votes.exists?(user: user)
+  end
+
+  def favorited_by?(user)
+    favorites.exists?(user: user)
   end
 end

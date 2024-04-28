@@ -1,49 +1,85 @@
-<h1 class="text-center font-bold text-3xl mb-4">Summary</h1>
-
-<div class="bg-gray-200 p-6 rounded-lg shadow-md">
-  <section class="mb-8">
-    <h2 class="text-xl font-semibold mb-4">Comments made:</h2>
-       <table class="table-auto">
-       <thead>
-        <tr>
-          <th class="px-4 py-2 border">Restaurant</th>
-          <th class="px-4 py-2 border">Comments</th>
-          <th class="px-4 py-2 border">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @comments.each do |comment| %>
+<div class="bg-gray-200 p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+  <h1 class="text-center font-bold text-3xl mb-4">Summary</h1><br />
+  <% if user_signed_in? %>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Comments made:</h2>
+      <% if current_user.comments.any? %>
+      <table class="w-full table-auto border-collapse border border-gray-300 mx-auto">
+        <thead>
           <tr>
-            <td class="px-4 py-2 border"><%= comment.restaurant.name %></td>
-            <td class="px-4 py-2 border"><%= comment.content %></td>
-            <td class="px-4 py-2 border"><%= comment.created_at.strftime("%m-%d-%Y") %></td>
+            <th class="px-4 py-2 border border-gray-300">Restaurant</th>
+            <th class="px-4 py-2 border border-gray-300">Comments</th>
+            <th class="px-4 py-2 border border-gray-300">Date</th>
           </tr>
-        <% end %>
-       </tbody>
-       </table>
-  </section>
+        </thead>
+        <tbody>
+          <% current_user.comments.each do |comment| %>
+            <tr>
+              <td class="px-4 py-2 border border-gray-300"><%= link_to comment.restaurant.name, restaurant_path(comment.restaurant) %></td>
+              <td class="px-4 py-2 border border-gray-300"><%= comment.content %></td>
+              <td class="px-4 py-2 border border-gray-300"><%= comment.created_at.strftime("%m-%d-%Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% else %>
+        <p>No comments made yet.</p>
+      <% end %>
+    </section>
 
-  <%# If you have data for favorite restaurants, implement similar section here %>
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Favorite Restaurants:</h2>
+      <% if @favorites.present? %>
+        <table class="w-full table-auto border-collapse border border-gray-300 mx-auto">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 border border-gray-300">Name</th>
+              <th class="px-4 py-2 border border-gray-300">Address</th>
+              <th class="px-4 py-2 border border-gray-300">Zip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @favorites.each do |favorite| %>
+              <tr>
+                <td class="px-4 py-2 border border-gray-300"><%= link_to favorite.restaurant.name, restaurant_path(favorite) %></td>
+                <td class="px-4 py-2 border border-gray-300"><%= favorite.restaurant.address %></td>
+                <td class="px-4 py-2 border border-gray-300"><%= favorite.restaurant.zip %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No favorite restaurants added yet.</p>
+      <% end %>
+    </section><br />
 
-  <section>
-    <h2 class="text-xl font-semibold mb-4">Vote History:</h2>
-    <table class="table-auto">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 border">Restaurant</th>
-          <th class="px-4 py-2 border">Will the Restaurant split</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @votes.each do |restaurant, votes| %>
-          <tr>
-            <td class="px-4 py-2 border"><%= restaurant.name %></td>
-            <%# Assuming there is only one vote per user per restaurant %>
-            <td class="px-4 py-2 border"><%= votes.first.split ? 'Yes' : 'No' %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </section>
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Vote History:</h2>
+      <% if @votes.any? %>
+        <table class="w-full table-auto border-collapse border border-gray-300 mx-auto">        
+          <thead>            
+            <tr>              
+              <th class="px-4 py-2 border border-gray-300">Restaurant</th>
+              <th class="px-4 py-2 border border-gray-300">Will the Restaurant split</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @votes.each do |restaurant, votes| %>
+              <tr>
+                <td class="px-4 py-2 border border-gray-300"><%= link_to restaurant.name, restaurant_path(restaurant) %></td>  
+                <td class="px-4 py-2 border border-gray-300"><%= votes.split ? 'Yes' : 'No' %></td>   
+              </tr>           
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p> No voting history available. </p>
+      <% end %>
+    </section>
+  <% else %>
+    <div class="text-center">
+      <p>Please <%= link_to 'sign in', new_user_session_path %> to view your profile summary.</p>
+    </div>
+  <% end %>
 </div>
 

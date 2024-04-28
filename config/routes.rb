@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :favorites
   resources :comments
   resources :votes
   devise_for :users, path: '', path_names: {
@@ -11,6 +12,10 @@ Rails.application.routes.draw do
   end
 
   resources :votes, only: [:index, :show,  :create, :destroy]
+
+  resources :restaurants do
+    resources :favorites, only: [:create, :destroy]
+  end
 
   resources :restaurants, except: [:destroy] do
     member do

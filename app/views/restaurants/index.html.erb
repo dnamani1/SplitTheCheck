@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <div class="container">
   <% if notice.present? %>
     <p class="notice"><%= notice %></p>
@@ -40,7 +41,7 @@
           <th>Zip</th>
           <th>Will Split Vote</th>
           <th>Won't Split Vote</th>
-          <th></th>
+          <th>Favorites</th>
         </tr>
       </thead>
       <tbody>
@@ -51,7 +52,25 @@
             <td><%= restaurant.zip %></td>
             <td><%= restaurant.will_split_vote_count %></td>
             <td><%= restaurant.wont_split_vote_count %></td>
-            <td><%= link_to 'Show', restaurant, class: 'btn' %></td>
+            <td>
+            <% if user_signed_in? %>
+              <% favorite = restaurant.favorites.find_by(user: current_user) %>
+              <% if favorite %>
+                <%= button_to favorite_path(favorite), method: :delete, remote: true, class: 'unfavorite', form: { class: 'inline' } do %>
+                  <i class="fa fa-star" style="font-size:24px;color:yellow"></i>
+                <% end %>
+              <% else %>
+      <%= button_to  favorites_path(restaurant_id: restaurant.id), method: :post, remote: true, class: 'favorite', form: { class: 'inline' } do %>
+        <i class="fa fa-star-o" style="font-size:24px;color:black"></i>
+      <% end %>
+  <% end %>
+  <% else %>
+    <%= link_to new_user_session_path do %>
+      <i class="fa fa-star-o" style="font-size:24px;color:black"></i>
+    <% end %>
+  <% end %>
+            </td>
+           <td><%= link_to 'Show', restaurant, class: 'btn' %></td>
           </tr>
         <% end %>
       </tbody>

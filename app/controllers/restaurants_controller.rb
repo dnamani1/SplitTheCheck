@@ -57,8 +57,15 @@ class RestaurantsController < ApplicationController
   end
 
   def summary
-    @comments = Comment.all.order(created_at: :desc)
-    @votes = Vote.all.group_by { |vote| vote.restaurant }
+    if user_signed_in?
+      @comments = current_user.comments.includes(:restaurant)
+      @favorites = current_user.favorites.includes(:restaurant)
+      @votes = current_user.votes.includes(:restaurant).map do |vote|  
+        [vote.restaurant, vote] 
+      end
+    else
+      redirect_to new_user_session_path, alert: "You must be signed in to view this page."
+    end
   end
 
   # POST /restaurants or /restaurants.json
