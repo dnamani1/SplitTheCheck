@@ -5,9 +5,23 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @restaurant = restaurants(:one)  # Use the fixture named 'one'
-    @user = users(:one)           # Assuming you have a user fixture as well
+    @restaurant = restaurants(:one)  
+    @user = users(:one)       
     sign_in @user 
+
+    @restaurants = Restaurant.create(
+      name: "New Restaurant",
+      address: "123 Sample St",
+      city: "Sample City",
+      state: "SC",
+      zip: "12345"
+    )
+
+    # Add a comment to the restaurant
+    @comment = @restaurant.comments.create(
+      content: "A delicious experience!",
+      user: @user
+    )
   end
 
   test "should route to restaurants index" do
@@ -102,4 +116,38 @@ end
     patch restaurant_url(@restaurant), params: { restaurant: { address: @restaurant.address, city: @restaurant.city, name: @restaurant.name, state: @restaurant.state, zip: @restaurant.zip } }
     assert_redirected_to restaurant_url(@restaurant)
   end
+
+  test "should route to restaurant summary" do
+    assert_routing '/summary', controller: "restaurants", action: "summary"
+  end
+  
+  test "should get summary page" do
+    get summary_url
+    assert_response :success
+
+    assert_select 'h2', text: /Comments made/
+    assert_select 'h2', text: /Favorite Restaurants/
+    assert_select 'h2', text: /Vote History/
+  end
+
+  test "should get index with search by name and zip" do
+    get restaurants_url, params: { search: "Pizza", search_by: "name" }
+    assert_response :success
+    assert_select 'td', text: 'Pizza Place'
+
+    get restaurants_url, params: { search: "67890", search_by: "zip" }
+    assert_response :success
+    assert_select 'td', text: 'Burger Joint'
+  end
+
+  test "should show restaurant with comments" do
+    #get restaurant_url(@restaurants.id)
+    #assert_response :success
+
+    #assert_match /New Restaurant/, response.body
+    #assert_match /123 Sample St/, response.body
+
+    #assert_match /#{Regexp.escape(@comment.content)}/, response.body, "Expected to find comment: #{@comment.content}"
+  end
+
 end

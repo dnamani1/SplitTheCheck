@@ -4,9 +4,9 @@ class VoteTest < ActiveSupport::TestCase
   setup do
     @user = users(:one)
     @restaurant = restaurants(:one)
-    @other_restaurant = restaurants(:two)  # Make sure you have a second restaurant.
+    @other_restaurant = restaurants(:two)
     
-    Vote.delete_all  # Clear votes to prevent state leakage between tests.
+    Vote.delete_all 
   end
 
   test "should be valid with valid attributes" do

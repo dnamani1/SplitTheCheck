@@ -4,6 +4,8 @@ class RestaurantTest < ActiveSupport::TestCase
 
   setup do
     @restaurant = Restaurant.new(name: "Example Restaurant", address: "123 Main St", city: "Townsville", state: "NY", zip: "12345")
+    @user1 = users(:one)
+    @user2 = users(:two)
   end
 
   test "restaurant attributes must not be empty" do
@@ -48,5 +50,33 @@ class RestaurantTest < ActiveSupport::TestCase
 
     @restaurant.name = "Restaurant"
     assert @restaurant.valid?, "Name starting with a letter should be valid"
+  end
+
+   test "should count split votes correctly" do
+    assert_equal 0, @restaurant.will_split_vote_count
+    Vote.create(user: @user1, restaurant: @restaurant, split: true)
+    assert_equal 1, @restaurant.will_split_vote_count
+  end
+
+  test "should count non-split votes correctly" do
+    assert_equal 0, @restaurant.wont_split_vote_count
+  end
+
+  test "should return true if user has voted for the restaurant" do
+    Vote.create(user: @user1, restaurant: @restaurant, split: true)
+    assert @restaurant.voted_by?(@user1)
+  end
+
+  test "should return false if user has not voted for the restaurant" do
+    assert_not @restaurant.voted_by?(@user2)
+  end
+
+  test "should return true if user has favorited the restaurant" do
+    favorite = Favorite.create(user: @user1, restaurant: @restaurant)
+    assert @restaurant.favorited_by?(@user1)
+  end
+
+  test "should return false if user has not favorited the restaurant" do
+    assert_not @restaurant.favorited_by?(@user2)
   end
 end

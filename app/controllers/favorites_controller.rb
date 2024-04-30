@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-  before_action :set_favorite, only: %i[ destroy ]
+  before_action :set_favorite, only: %i[destroy]
   before_action :authenticate_user!
 
   # POST /favorites or /favorites.json
@@ -12,6 +12,7 @@ class FavoritesController < ApplicationController
         format.json { render :show, status: :created, location: @favorite }
       else
         format.html { redirect_back(fallback_location: root_path, alert: 'Could not mark as favorite.') }
+        Rails.logger.error "Favorite creation error: #{@favorite.errors.full_messages.join(", ")}"
         format.json { render json: @favorite.errors, status: :unprocessable_entity }
       end
     end
@@ -20,10 +21,13 @@ class FavoritesController < ApplicationController
   # DELETE /favorites/1 or /favorites/1.json
   def destroy
     @favorite = current_user.favorites.find_by(id: params[:id])
+
     if @favorite
+      @restaurant = @favorite.restaurant
       @favorite.destroy
+
       respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notice: 'Favorite was successfully removed.') }
+        format.html { redirect_back(fallback_location: restaurant_path(@restaurant), notice: 'Favorite successfully removed.') }
         format.json { head :no_content }
       end
     else
@@ -32,13 +36,13 @@ class FavoritesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_favorite
-      @favorite = current_user.favorites.find_by(id: params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def favorite_params
-      params.require(:favorite).permit(:user_id, :restaurant_id)
-    end
+  def set_favorite
+    @favorite = current_user.favorites.find_by(id: params[:id])
+  end
+
+  def favorite_params
+    params.require(:favorite).permit(:user_id, :restaurant_id)
+  end
 end
+

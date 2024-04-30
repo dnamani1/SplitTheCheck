@@ -29,4 +29,25 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal 2, user.votes.count, "User should have two votes"
   end
+
+  test "can have multiple comments" do
+    user = User.create!(@user_attributes)
+    restaurant1 = restaurants(:one)
+    restaurant2 = restaurants(:two)
+    user.comments.create!(restaurant: restaurant1, content: "Great food!")
+    user.comments.create!(restaurant: restaurant2, content: "Nice ambiance!")
+
+    assert_equal 2, user.comments.count, "User should have two comments"
+  end
+
+  test "can have multiple favorite restaurants" do
+    user = User.create!(@user_attributes)
+    restaurant1 = restaurants(:one)
+    restaurant2 = restaurants(:two)
+    user.favorites.create!(restaurant: restaurant1)
+    user.favorites.create!(restaurant: restaurant2)
+
+    assert_equal 2, user.favorite_restaurants.count, "User should have two favorite restaurants"
+  end
+
 end
