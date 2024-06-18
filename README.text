@@ -1,0 +1,92 @@
+# SplitTheCheck
+
+## Overview
+
+SplitTheCheck is a social-networking web application that helps users find and vote on restaurants based on their check-splitting policies. Users can search for restaurants, add new listings, and vote on whether a restaurant splits the check or not. The project is developed in three sprints, each adding more features and improving the user experience.
+
+## Sprints
+
+### Sprint 1
+
+- **Design and Core Functionality:**
+  - Provided a UML class diagram showing the model class and its controller.
+  - Created wireframes for the restaurants' index and show screens.
+  - Implemented basic functionality for adding and searching restaurants.
+  - Allowed users to vote on whether a restaurant splits the check.
+  - All data, including vote totals, are stored in a single table.
+  - Implemented unit tests for custom controller and model functionality.
+
+### Sprint 2
+
+- **User Authentication and Vote History:**
+  - Integrated user authentication using Devise, allowing standard login and password functionality.
+  - Restricted writable functions (e.g., creating listings, voting) to logged-in users.
+  - Implemented a vote history system, tracking who voted and how they voted.
+  - Updated class diagrams to reflect new model and controller classes.
+  - Enhanced unit tests to cover new functionality and vote history tracking.
+
+### Sprint 3
+
+- **Commenting System and User Profiles:**
+  - Added a commenting system allowing users to comment on restaurants.
+  - Created private user profiles displaying their comments, votes, and favorite restaurants.
+  - Implemented a favorite feature, allowing users to mark restaurants as favorites using a star icon.
+  - Updated class diagrams to include new features and relationships.
+  - Continued improving unit tests to ensure all new functionality is covered.
+
+## Installation
+
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/yourusername/SplitTheCheck.git
+    cd SplitTheCheck
+    ```
+
+2. **Install dependencies:**
+    ```sh
+    bundle install
+    ```
+
+3. **Set up the database:**
+    ```sh
+    rails db:create
+    rails db:migrate
+    rails db:seed
+    ```
+
+4. **Run the tests:**
+    ```sh
+    rails test
+    ```
+
+5. **Start the server:**
+    ```sh
+    rails server
+    ```
+
+## Usage
+
+- **Homepage:** View and search for restaurants.
+- **Restaurant Pages:** Add new restaurants, vote on existing ones, and view comments.
+- **User Profiles:** View your comments, votes, and favorite restaurants (only accessible when logged in).
+
+## Contributing
+
+1. Fork the repository.
+2. Create a new branch.
+    ```sh
+    git checkout -b feature/your-feature-name
+    ```
+3. Make your changes and commit them.
+    ```sh
+    git commit -m "Add feature: your feature description"
+    ```
+4. Push to the branch.
+    ```sh
+    git push origin feature/your-feature-name
+    ```
+5. Open a pull request.
+
+## Acknowledgements
+
+Special thanks to my professor, the source he provided, and his support and guidance in this project.
